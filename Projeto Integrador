@@ -1,0 +1,555 @@
+#Programa para validar concentrações digitadas pelo usuário
+import time
+começar_tempo = time.time()
+
+def validar_concentracao_digitada(mensagem):
+    while True:
+        try:
+           concentracao = float(input(mensagem))
+           if concentracao < 0 or concentracao > 2000:
+               print("A concentração digitada deve estar entre 0 e 2000!\n")
+               continue
+           return concentracao
+        except ValueError:
+            print("Valor inválido, a concentração digitada deve ser numérica!\n")
+            
+def exibir_qualidade_do_ar(componente, qualidade):
+    print("A qualidade do ar em nível de " + componente + " é " + qualidade + ".")
+
+fecharPrograma = False
+
+while fecharPrograma == False:
+    try:
+        inicio = float(input("\nEscolha uma das opções abaixo: \n" +
+                        "1 - Avaliar qualidade do ar\n" +
+                        "2 - Fechar o programa\n"))
+       
+        if inicio != 1 and inicio !=2:
+            print("Opção inválida, tente novamente!")
+           
+        if inicio == 2:
+            print("\nObrigado por usar nosso avaliador de qualidade do ar!")
+            parar_tempo = time.time()
+            tempo_usado = parar_tempo - começar_tempo
+            print('Você utilizou este programa por {:.2f} segundos!'.format(tempo_usado))
+            break
+       
+        while inicio == 1:
+            mp10 = validar_concentracao_digitada("Digite a concentração medida de MP₁₀(µg/m³)" +
+            "coletada nas últimas 24 horas: ")
+            mp2e5 = validar_concentracao_digitada("Digite a concentração medida de MP₂,₅(µg/m³)" +
+            "coletada nas últimas 24 horas: ")
+            o3 = validar_concentracao_digitada("Digite a concentração medida de O₃(µg/m³)" +
+            "coletada nas últimas 8 horas: ")
+            co = validar_concentracao_digitada("Digite a concentração medida de CO(µg/m³)" +
+            "coletada nas últimas 8 horas: ")
+            no2 = validar_concentracao_digitada("Digite a concentração medida de NO₂(µg/m³)" +
+            "coletada na última 1 hora: ")
+            so2 = validar_concentracao_digitada("Digite a concentração medida de SO₂(µg/m³)" +
+            "coletada nas últimas 24 horas: ")
+            
+            print("\n-----------------------------------------------------------------------\n")
+            
+            indiceInicial = 0
+            indiceFinal = 0
+            concentracaoInicial = 0
+            concentracaoFinal = 0
+            indiceTotal = 0
+           
+            #------------------------------Cálculo do MP₁₀-----------------------------------
+
+            if mp10 >= 0 and mp10 <= 50:
+                indiceInicial = 0
+                indiceFinal = 40
+                concentracaoInicial = 0
+                concentracaoFinal = 50
+               
+                indiceTotal = indiceInicial + ((indiceFinal - indiceInicial) /
+                (concentracaoFinal - concentracaoInicial)) * (mp10 - concentracaoInicial)
+               
+                print("Índice total do MP₁₀: ", indiceTotal)
+                exibir_qualidade_do_ar("MP₁₀", "BOA")
+                print("Como a qualidade do ar é boa, não existem riscos à saúde.")
+                print()
+           
+            elif mp10 > 50 and mp10 <= 100:
+
+                indiceInicial = 41
+                indiceFinal = 80
+                concentracaoInicial = 51
+
+                concentracaoFinal = 100
+           
+                indiceTotal = indiceInicial + ((indiceFinal - indiceInicial) /
+                (concentracaoFinal - concentracaoInicial)) * (mp10 - concentracaoInicial)
+               
+                print("Índice total do MP₁₀: ", indiceTotal)
+                exibir_qualidade_do_ar("MP₁₀", "MODERADA")
+                print("Os riscos a saúde são:\n Pessoas de grupos sensíveis (crianças, idosos e pessoas com doenças respiratórias e cardíacas)" +
+                "\n podem apresentar sintomas como tosse seca e cansaço. A população, em geral, não é afetada.")
+                print()
+           
+            elif mp10 > 100 and mp10 <= 150:
+
+                indiceInicial = 81
+                indiceFinal = 120
+                concentracaoInicial = 101
+
+                concentracaoFinal = 150
+           
+                indiceTotal = indiceInicial + ((indiceFinal - indiceInicial) /
+                (concentracaoFinal - concentracaoInicial)) * (mp10 - concentracaoInicial)
+               
+                print("Índice total do MP₁₀: ", indiceTotal)
+                exibir_qualidade_do_ar("MP₁₀", "RUIM")
+                print("Os riscos a saúde são: \n Toda a população pode apresentar sintomas como tosse seca, cansaço, ardor nos olhos, nariz e garganta." +
+                "\n Pessoas de grupos sensíveis (crianças, idosos e pessoas com doenças respiratórias e cardíacas) podem apresentar efeitos mais sérios na saúde.")
+                print()
+           
+            elif mp10 > 150 and mp10 <= 250:
+
+                indiceInicial = 121
+                indiceFinal = 200
+                concentracaoInicial = 151
+
+                concentracaoFinal = 250
+           
+                indiceTotal = indiceInicial + ((indiceFinal - indiceInicial) /
+                (concentracaoFinal - concentracaoInicial)) * (mp10 - concentracaoInicial)
+               
+                print("Índice total do MP₁₀: ", indiceTotal)
+                exibir_qualidade_do_ar("MP₁₀", "MUITO RUIM")
+                print("Os riscos a saúde são: \n Toda a população pode apresentar agravamento dos sintomas como tosse seca, cansaço," + 
+                "ardor nos olhos, nariz e garganta e ainda falta de ar e respiração ofegante." +
+                "\n Efeitos ainda mais graves à saúde de grupos sensíveis (crianças, idosos e pessoas com doenças respiratórias e cardíacas).")
+                print()
+           
+            elif mp10 > 250:
+                indiceInicial = 201
+                indiceFinal = 999
+                concentracaoInicial = 251
+                concentracaoFinal = 2000
+           
+                indiceTotal = indiceInicial + ((indiceFinal - indiceInicial) /
+                (concentracaoFinal - concentracaoInicial)) * (mp10 - concentracaoInicial)
+               
+                print("Índice total do MP₁₀: ", indiceTotal)
+                exibir_qualidade_do_ar("MP₁₀", "PÉSSIMA")
+                print("Os riscos a saúde são: \n Toda a população pode apresentar sérios riscos de manifestações de doenças respiratórias e cardiovasculares." +
+                "\n Também poderá levar ao aumento de mortes prematuras em pessoas de grupos sensíveis.")
+                print()
+           
+            #------------------------------Cálculo do MP₂,₅-----------------------------------
+            
+            if mp2e5 >= 0 and mp2e5 <= 25:
+
+                indiceInicial = 0
+                indiceFinal = 40
+                concentracaoInicial = 0
+                concentracaoFinal = 25
+                   
+                indiceTotal = indiceInicial + ((indiceFinal - indiceInicial) /
+                (concentracaoFinal - concentracaoInicial)) * (mp2e5 - concentracaoInicial)
+               
+                print("Índice total do MP₂,₅: ", indiceTotal)
+                exibir_qualidade_do_ar("MP₂,₅", "BOA")
+                print("Como a qualidade do ar é boa, não existem riscos à saúde.")
+                print()
+           
+            elif mp2e5 > 25 and mp2e5 <= 50:
+
+                indiceInicial = 41
+                indiceFinal = 80
+                concentracaoInicial = 26
+                concentracaoFinal = 50
+           
+                indiceTotal = indiceInicial + ((indiceFinal - indiceInicial) /
+                (concentracaoFinal - concentracaoInicial)) * (mp2e5 - concentracaoInicial)
+               
+                print("Índice total do MP₂,₅: ", indiceTotal)
+                exibir_qualidade_do_ar("MP₂,₅", "MODERADA")
+                print("Os riscos a saúde são:\n Pessoas de grupos sensíveis (crianças, idosos e pessoas com doenças respiratórias e cardíacas)\n podem apresentar sintomas como tosse seca e cansaço. A população, em geral, não é afetada.")
+                print()
+           
+            elif mp2e5 > 50 and mp2e5 <= 75:
+
+                indiceInicial = 81
+                indiceFinal = 120
+                concentracaoInicial = 51
+                concentracaoFinal = 75
+           
+                indiceTotal = indiceInicial + ((indiceFinal - indiceInicial) /
+                (concentracaoFinal - concentracaoInicial)) * (mp2e5 - concentracaoInicial)
+               
+                print("Índice total do MP₂,₅: ", indiceTotal)
+                exibir_qualidade_do_ar("MP₂,₅", "RUIM")
+                print("Os riscos a saúde são: \n Toda a população pode apresentar sintomas como tosse seca, cansaço, ardor nos olhos, nariz e garganta.\n Pessoas de grupos sensíveis (crianças, idosos e pessoas com doenças respiratórias e cardíacas) podem apresentar efeitos mais sérios na saúde.")
+                print()
+           
+            elif mp2e5 > 75 and mp2e5 <= 125:
+
+                indiceInicial = 121
+                indiceFinal = 200
+                concentracaoInicial = 76
+                concentracaoFinal = 125
+           
+                indiceTotal = indiceInicial + ((indiceFinal - indiceInicial) /
+                (concentracaoFinal - concentracaoInicial)) * (mp2e5 - concentracaoInicial)
+               
+                print("Índice total do MP₂,₅: ", indiceTotal)
+                exibir_qualidade_do_ar("MP₂,₅", "MUITO RUIM")
+                print("Os riscos a saúde são: \n Toda a população pode apresentar agravamento dos sintomas como tosse seca, cansaço, ardor nos olhos, nariz e garganta e ainda falta de ar e respiração ofegante.\n Efeitos ainda mais graves à saúde de grupos sensíveis (crianças, idosos e pessoas com doenças respiratórias e cardíacas).")
+                print()
+           
+            elif mp2e5 > 125:
+                indiceInicial = 201
+                indiceFinal = 999
+                concentracaoInicial = 126
+                concentracaoFinal = 2000
+           
+                indiceTotal = indiceInicial + ((indiceFinal - indiceInicial) /
+                (concentracaoFinal - concentracaoInicial)) * (mp2e5 - concentracaoInicial)
+               
+                print("Índice total do MP₂,₅: ", indiceTotal)
+                exibir_qualidade_do_ar("MP₂,₅", "PÉSSIMA")
+                print("Os riscos a saúde são: \n Toda a população pode apresentar sérios riscos de manifestações de doenças respiratórias e cardiovasculares. \n Aumento de mortes prematuras em pessoas de grupos sensíveis.")
+                print()
+           
+            #------------------------------Cálculo do O₃-----------------------------------
+            
+            if o3 >= 0 and o3 <= 100:
+
+                indiceInicial = 0
+                indiceFinal = 40
+                concentracaoInicial = 0
+                concentracaoFinal = 100
+               
+                indiceTotal = indiceInicial + ((indiceFinal - indiceInicial) /
+                (concentracaoFinal - concentracaoInicial)) * (o3 - concentracaoInicial)
+               
+                print("Índice total do O₃: ", indiceTotal)
+                exibir_qualidade_do_ar("O₃", "BOA")
+                print("Como a qualidade do ar é boa, não existem riscos à saúde.")
+                print()
+           
+            elif o3 > 100 and o3 <= 130:
+
+                indiceInicial = 41
+                indiceFinal = 80
+                concentracaoInicial = 101
+                concentracaoFinal = 130
+           
+                indiceTotal = indiceInicial + ((indiceFinal - indiceInicial) /
+                (concentracaoFinal - concentracaoInicial)) * (o3 - concentracaoInicial)
+
+                print("Índice total do O₃: ", indiceTotal)
+                exibir_qualidade_do_ar("O₃", "MODERADA")
+                print("Os riscos a saúde são:\n Pessoas de grupos sensíveis (crianças, idosos e pessoas com doenças respiratórias e cardíacas)\n podem apresentar sintomas como tosse seca e cansaço. A população, em geral, não é afetada.")
+                print()
+           
+            elif o3 > 130 and o3 <= 160:
+
+                indiceInicial = 81
+                indiceFinal = 120
+                concentracaoInicial = 131
+                concentracaoFinal = 160
+           
+                indiceTotal = indiceInicial + ((indiceFinal - indiceInicial) /
+                (concentracaoFinal - concentracaoInicial)) * (o3 - concentracaoInicial)
+               
+                print("Índice total do O₃: ", indiceTotal)
+                exibir_qualidade_do_ar("O₃", "RUIM")
+                print("Os riscos a saúde são: \n Toda a população pode apresentar sintomas como tosse seca, cansaço, ardor nos olhos, nariz e garganta.\n Pessoas de grupos sensíveis (crianças, idosos e pessoas com doenças respiratórias e cardíacas) podem apresentar efeitos mais sérios na saúde.")
+                print()
+           
+            elif o3 > 160 and o3 <= 200:
+
+                indiceInicial = 121
+                indiceFinal = 200
+                concentracaoInicial = 161
+                concentracaoFinal = 200
+           
+                indiceTotal = indiceInicial + ((indiceFinal - indiceInicial) /
+                (concentracaoFinal - concentracaoInicial)) * (o3 - concentracaoInicial)
+               
+                print("Índice total do O₃: ", indiceTotal)
+                exibir_qualidade_do_ar("O₃", "MUITO RUIM")
+                print("Os riscos a saúde são: \n Toda a população pode apresentar agravamento dos sintomas como tosse seca, cansaço, ardor nos olhos, nariz e garganta e ainda falta de ar e respiração ofegante.\n Efeitos ainda mais graves à saúde de grupos sensíveis (crianças, idosos e pessoas com doenças respiratórias e cardíacas).")
+                print()
+           
+            elif o3 >200:
+                indiceInicial = 201
+                indiceFinal = 999
+                concentracaoInicial = 201
+                concentracaoFinal = 2000
+           
+                indiceTotal = indiceInicial + ((indiceFinal - indiceInicial) /
+                (concentracaoFinal - concentracaoInicial)) * (o3 - concentracaoInicial)
+               
+                print("Índice total do O₃: ", indiceTotal)
+                exibir_qualidade_do_ar("O₃", "PÉSSIMA")
+                print("Os riscos a saúde são: \n Toda a população pode apresentar sérios riscos de manifestações de doenças respiratórias e cardiovasculares. \n Aumento de mortes prematuras em pessoas de grupos sensíveis.")
+                print()
+           
+            #--------------------------------Cálculo do CO-----------------------------------
+            
+            if co >= 0 and co <= 9:
+
+                indiceInicial = 0
+                indiceFinal = 40
+                concentracaoInicial = 0
+                concentracaoFinal = 9
+               
+                indiceTotal = indiceInicial + ((indiceFinal - indiceInicial) /
+                (concentracaoFinal - concentracaoInicial)) * (co - concentracaoInicial)
+
+                print("Índice total do CO: ", indiceTotal)
+                exibir_qualidade_do_ar("CO", "BOA")
+                print("Como a qualidade do ar é boa, não existem riscos à saúde.")
+                print()
+           
+            elif co > 9 and co <= 11:
+
+                indiceInicial = 41
+                indiceFinal = 80
+                concentracaoInicial = 10
+                concentracaoFinal = 11
+           
+                indiceTotal = indiceInicial + ((indiceFinal - indiceInicial) /
+                (concentracaoFinal - concentracaoInicial)) * (co - concentracaoInicial)
+               
+                print("Índice total do CO: ", indiceTotal)
+                exibir_qualidade_do_ar("CO", "MODERADA")
+                print("Os riscos a saúde são:\n Pessoas de grupos sensíveis (crianças, idosos e pessoas com doenças respiratórias e cardíacas)\n podem apresentar sintomas como tosse seca e cansaço. A população, em geral, não é afetada.")
+                print()
+           
+            elif co > 11 and co <= 13:
+
+                indiceInicial = 81
+                indiceFinal = 120
+                concentracaoInicial = 12
+                concentracaoFinal = 13
+           
+                indiceTotal = indiceInicial + ((indiceFinal - indiceInicial) /
+                (concentracaoFinal - concentracaoInicial)) * (co - concentracaoInicial)
+
+                print("Índice total do CO: ", indiceTotal)
+                exibir_qualidade_do_ar("CO", "RUIM")
+                print("Os riscos a saúde são: \n Toda a população pode apresentar sintomas como tosse seca, cansaço, ardor nos olhos, nariz e garganta.\n Pessoas de grupos sensíveis (crianças, idosos e pessoas com doenças respiratórias e cardíacas) podem apresentar efeitos mais sérios na saúde.")
+                print()
+           
+            elif co > 13 and co < 15:
+
+                indiceInicial = 121
+                indiceFinal = 200
+                concentracaoInicial = 14
+                concentracaoFinal = 15
+           
+                indiceTotal = indiceInicial + ((indiceFinal - indiceInicial) /
+                (concentracaoFinal - concentracaoInicial)) * (co - concentracaoInicial)
+               
+                print("Índice total do CO: ", indiceTotal)
+                exibir_qualidade_do_ar("CO", "MUITO RUIM")
+                print("Os riscos a saúde são: \n Toda a população pode apresentar agravamento dos sintomas como tosse seca, cansaço, ardor nos olhos, nariz e garganta e ainda falta de ar e respiração ofegante.\n Efeitos ainda mais graves à saúde de grupos sensíveis (crianças, idosos e pessoas com doenças respiratórias e cardíacas).")
+                print()
+           
+            elif co > 15:
+                indiceInicial = 201
+                indiceFinal = 999
+                concentracaoInicial = 16
+                concentracaoFinal = 2000
+       
+                indiceTotal = indiceInicial + ((indiceFinal - indiceInicial) /
+                (concentracaoFinal - concentracaoInicial)) * (co - concentracaoInicial)
+               
+                print("Índice total do CO: ", indiceTotal)
+                exibir_qualidade_do_ar("CO", "PÉSSIMA")
+                print("Os riscos a saúde são: \n Toda a população pode apresentar sérios riscos de manifestações de doenças respiratórias e cardiovasculares. \n Aumento de mortes prematuras em pessoas de grupos sensíveis.")
+                print()
+           
+            #-----------------------------Cálculo do NO₂-----------------------------------
+            
+            if no2 >= 0 and no2 <= 200:
+
+                indiceInicial = 0
+                indiceFinal = 40
+                concentracaoInicial = 0
+                concentracaoFinal = 200
+               
+                indiceTotal = indiceInicial + ((indiceFinal - indiceInicial) /
+                (concentracaoFinal - concentracaoInicial)) * (no2 - concentracaoInicial)
+               
+                print("Índice total do NO₂: ", indiceTotal)
+                exibir_qualidade_do_ar("NO₂", "BOA")
+                print("Como a qualidade do ar é boa, não existem riscos à saúde.")
+                print()
+           
+            elif no2 > 200 and no2 <= 240:
+
+                indiceInicial = 41
+                indiceFinal = 80
+                concentracaoInicial = 201
+                concentracaoFinal = 240
+           
+                indiceTotal = indiceInicial + ((indiceFinal - indiceInicial) /
+                (concentracaoFinal - concentracaoInicial)) * (no2 - concentracaoInicial)
+               
+                print("Índice total do NO₂: ", indiceTotal)
+                exibir_qualidade_do_ar("NO₂", "MODERADA")
+                print("Os riscos a saúde são:\n Pessoas de grupos sensíveis (crianças, idosos e pessoas com doenças respiratórias e cardíacas)\n podem apresentar sintomas como tosse seca e cansaço. A população, em geral, não é afetada.")
+                print()
+           
+            elif no2 > 240 and no2 <= 320:
+
+                indiceInicial = 81
+                indiceFinal = 120
+                concentracaoInicial = 241
+                concentracaoFinal = 320
+           
+                indiceTotal = indiceInicial + ((indiceFinal - indiceInicial) /
+                (concentracaoFinal - concentracaoInicial)) * (no2 - concentracaoInicial)
+               
+                print("Índice total do NO₂: ", indiceTotal)
+                exibir_qualidade_do_ar("NO₂", "RUIM")
+                print("Os riscos a saúde são: \n Toda a população pode apresentar sintomas como tosse seca, cansaço, ardor nos olhos, nariz e garganta.\n Pessoas de grupos sensíveis (crianças, idosos e pessoas com doenças respiratórias e cardíacas) podem apresentar efeitos mais sérios na saúde.")
+                print()
+           
+            elif no2 > 320 and no2 < 1130:
+
+                indiceInicial = 121
+                indiceFinal = 200
+                concentracaoInicial = 321
+                concentracaoFinal = 1130
+           
+                indiceTotal = indiceInicial + ((indiceFinal - indiceInicial) /
+                (concentracaoFinal - concentracaoInicial)) * (no2 - concentracaoInicial)
+               
+                print("Índice total do NO₂: ", indiceTotal)
+                exibir_qualidade_do_ar("NO₂", "MUITO RUIM")
+                print("Os riscos a saúde são: \n Toda a população pode apresentar agravamento dos sintomas como tosse seca, cansaço, ardor nos olhos, nariz e garganta e ainda falta de ar e respiração ofegante.\n Efeitos ainda mais graves à saúde de grupos sensíveis (crianças, idosos e pessoas com doenças respiratórias e cardíacas).")
+                print()
+           
+            elif no2 > 1130:
+                indiceInicial = 251
+                indiceFinal = 999
+                concentracaoInicial = 1131
+                concentracaoFinal = 2000
+           
+                indiceTotal = indiceInicial + ((indiceFinal - indiceInicial) /
+                (concentracaoFinal - concentracaoInicial)) * (no2 - concentracaoInicial)
+               
+                print("Índice total do NO₂: ", indiceTotal)
+                exibir_qualidade_do_ar("NO₂", "PÉSSIMA")
+                print("Os riscos a saúde são: \n Toda a população pode apresentar sérios riscos de manifestações de doenças respiratórias e cardiovasculares. \n Aumento de mortes prematuras em pessoas de grupos sensíveis.")
+                print()
+           
+            #-----------------------------Cálculo do SO₂-----------------------------------
+           
+            if so2 >= 0 and so2 <= 20:
+
+                indiceInicial = 0
+                indiceFinal = 40
+                concentracaoInicial = 0
+                concentracaoFinal = 20
+               
+                indiceTotal = indiceInicial + ((indiceFinal - indiceInicial) /
+                (concentracaoFinal - concentracaoInicial)) * (so2 - concentracaoInicial)
+
+           
+               
+                print("Índice total do SO₂: ", indiceTotal)
+                exibir_qualidade_do_ar("SO₂", "BOA")
+                print("Como a qualidade do ar é boa, não existem riscos à saúde.")
+                print()
+           
+            elif so2 > 20 and so2 <= 40:
+
+                indiceInicial = 41
+                indiceFinal = 80
+                concentracaoInicial = 21
+                concentracaoFinal = 40
+           
+                indiceTotal = indiceInicial + ((indiceFinal - indiceInicial) /
+                (concentracaoFinal - concentracaoInicial)) * (so2 - concentracaoInicial)
+
+           
+               
+                print("Índice total do SO₂: ", indiceTotal)
+                exibir_qualidade_do_ar("SO₂", "MODERADA")
+                print("Os riscos a saúde são:\n Pessoas de grupos sensíveis (crianças, idosos e pessoas com doenças respiratórias e cardíacas)\n podem apresentar sintomas como tosse seca e cansaço. A população, em geral, não é afetada.")
+                print()
+           
+            elif so2 > 40 and so2 <= 365:
+
+                indiceInicial = 81
+                indiceFinal = 120
+                concentracaoInicial = 41
+                concentracaoFinal = 365
+           
+                indiceTotal = indiceInicial + ((indiceFinal - indiceInicial) /
+                (concentracaoFinal - concentracaoInicial)) * (so2 - concentracaoInicial)
+
+           
+               
+                print("Índice total do SO₂: ", indiceTotal)
+                exibir_qualidade_do_ar("SO₂", "RUIM")
+                print("Os riscos a saúde são: \n Toda a população pode apresentar sintomas como tosse seca, cansaço, ardor nos olhos, nariz e garganta.\n Pessoas de grupos sensíveis (crianças, idosos e pessoas com doenças respiratórias e cardíacas) podem apresentar efeitos mais sérios na saúde.")
+                print()
+           
+            elif so2 > 365 and so2 <= 800:
+
+                indiceInicial = 121
+                indiceFinal = 200
+                concentracaoInicial = 366
+                concentracaoFinal = 800
+           
+                indiceTotal = indiceInicial + ((indiceFinal - indiceInicial) /
+                (concentracaoFinal - concentracaoInicial)) * (so2 - concentracaoInicial)
+
+           
+               
+                print("Índice total do SO₂: ", indiceTotal)
+                exibir_qualidade_do_ar("SO₂", "MUITO RUIM")
+                print("Os riscos a saúde são: \n Toda a população pode apresentar agravamento dos sintomas como tosse seca, cansaço, ardor nos olhos, nariz e garganta e ainda falta de ar e respiração ofegante.\n Efeitos ainda mais graves à saúde de grupos sensíveis (crianças, idosos e pessoas com doenças respiratórias e cardíacas).")
+                print()
+           
+            elif so2 > 800:
+                indiceInicial = 251
+                indiceFinal = 999
+                concentracaoInicial = 801
+                concentracaoFinal = 2000
+
+           
+                indiceTotal = indiceInicial + ((indiceFinal - indiceInicial) /
+                (concentracaoFinal - concentracaoInicial)) * (so2 - concentracaoInicial)
+           
+               
+                print("Índice total do SO₂: ", indiceTotal)
+                exibir_qualidade_do_ar("SO₂", "PÉSSIMA")
+                print("Os riscos a saúde são: \n Toda a população pode apresentar sérios riscos de manifestações de doenças respiratórias e cardiovasculares. \n Aumento de mortes prematuras em pessoas de grupos sensíveis.")
+                print()
+           
+            opcaoValida = False
+            while opcaoValida == False:
+               
+                inicio = input("Deseja continuar avaliando a qualidade do ar? \n" +
+                                "1 - Sim\n" +
+                                "2 - Não\n")
+                               
+                if inicio == "1":
+                    opcaoValida = True
+               
+                elif inicio == "2":
+                    opcaoValida = True
+                    fecharPrograma = True
+                    print("\nObrigado por usar nosso avaliador de qualidade do ar!")
+                    parar_tempo = time.time()
+                    tempo_usado = parar_tempo - começar_tempo
+                    print('Você utilizou este programa por {:.2f} segundos!'.format(tempo_usado))
+                    break
+                
+                elif inicio != "1":
+                    print("Opção inválida, tente novamente!")
+                   
+    except:
+        print("Opção inválida, tente novamente!")
