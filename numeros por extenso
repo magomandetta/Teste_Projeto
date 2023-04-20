@@ -1,0 +1,312 @@
+'''
+
+Welcome to GDB Online.
+GDB online is an online compiler and debugger tool for C, C++, Python, Java, PHP, Ruby, Perl,
+C#, OCaml, VB, Swift, Pascal, Fortran, Haskell, Objective-C, Assembly, HTML, CSS, JS, SQLite, Prolog.
+Code, Compile, Run and Debug online from anywhere in world.
+
+'''
+print ('Este programa é capaz de converter números monetários que estejam no intervalo de -999.99 a 999.99 para a forma extensa.\n')
+print ("Este programa foi feito por Leonardo Quartaroli - RA:23011756")
+repeticaodoprograma1=False
+while not repeticaodoprograma1:
+    try:
+        digitacao=input("\nDigite uma quantia monetária: ")
+        valor    =float(digitacao)
+        
+    except ValueError:
+        print("\nPor favor, insira um valor monetário que esteja dentro do intervalo de -999.99 a 999.99. Considere tentar novamente.")
+        
+    else:
+        parte=digitacao.split(".")
+        
+        if parte[0]=="":
+            parte[0]="0"
+            
+        elif parte[0]=="-":
+            parte[0]="0"
+            
+        if len(parte)==1:
+            parte.append("00")
+            
+        elif parte[1]=="":
+            parte[1]="00"
+            
+        elif len(parte[1])==1:
+            parte[1]=parte[1]+"0"
+            
+        if len(parte[1])>2:
+            print("\nDeve-se Digitar uma Quantia monetaria entre -999.99 e 999.99, tente novamente!")
+            
+        else:
+            reais   =int(parte[0])
+            centavos=int(parte[1])
+            
+            
+            if reais<-999 or reais>999:
+                print("\nA digitaçao esta fora da faixa solicitada! Tente novamente.")
+                
+            elif reais==0 and centavos==0:
+                print("Zero Reais.")
+                
+            elif valor<0:
+                print("menos ", end="")
+                reais=-reais
+                
+            dig1centavos=centavos//10
+            dig2centavos=centavos%10
+            dig1reais=reais//100
+            dig2reais=(reais%100)//10
+            dig3reais=reais%10
+            
+            if dig1reais==9:
+                print("novecentos", end="")
+                
+            elif dig1reais==8:
+                print("oitocentos", end="")
+            
+            elif dig1reais==7:
+                print("setecentos", end="") 
+                
+            elif dig1reais==6:
+                print("seiscentos", end="")
+                
+            elif dig1reais==5:
+                print("quinhentos", end="")
+                
+            elif dig1reais==4:
+                print("quatrocentos", end="")
+                
+            elif dig1reais==3:
+                print("trezentos", end="")
+                
+            elif dig1reais==2:
+                print("duzentos", end="")
+                
+            elif dig1reais==1 and (dig2reais!=0 or dig3reais!=0):
+                print("cento", end="")
+                
+            elif dig1reais==1 and dig2reais==0 and dig3reais==0:
+                print("cem", end="")
+                
+            if (dig2reais!=0 or dig3reais!=0) and dig1reais!=0:
+                print(" e ", end="")
+                
+            if dig2reais==9:
+                print("noventa", end="")
+                
+            elif dig2reais==8:
+                print("oitenta", end="")
+                
+            elif dig2reais==7:
+                print("setenta", end="")
+                
+            elif dig2reais==6:
+                print("sessenta", end="")
+                
+            elif dig2reais==5:
+                print("cinquenta", end="")
+                
+            elif dig2reais==4:
+                print("quarenta", end="")
+                
+            elif dig2reais==3:
+                print("trinta", end="")
+                
+            elif dig2reais==2:
+                print("vinte", end="")
+                
+            elif dig2reais==1 and dig3reais==0:
+                print("dez", end="")
+                
+            elif dig2reais==1 and dig3reais==1:
+                print("onze", end="")
+                
+            elif dig2reais==1 and dig3reais==2:
+                print("doze", end="")
+                
+            elif dig2reais==1 and dig3reais==3:
+                print("treze", end="")
+                
+            elif dig2reais==1 and dig3reais==4:
+                print("quatorze", end="")
+                
+            elif dig2reais==1 and dig3reais==5:
+                print("quinze", end="")
+                
+            elif dig2reais==1 and dig3reais==6:
+                print("dezesseis", end="")
+                
+            elif dig2reais==1 and dig3reais==7:
+                print("dezessete", end="")
+                
+            elif dig2reais==1 and dig3reais==8:
+                print("dezoito", end="")
+                
+            elif dig2reais==1 and dig3reais==9:
+                print("dezonove", end="")
+                
+            if dig3reais!=0 and dig2reais>1:
+                print(" e ", end="")
+                
+            if dig3reais==9 and dig2reais!=1:
+                print("nove", end="")
+                
+            elif dig3reais==8 and dig2reais!=1:
+                print("oito", end="")
+                
+            elif dig3reais==7 and dig2reais!=1:
+                print("sete", end="")
+                
+            elif dig3reais==6 and dig2reais!=1:
+                print("seis", end="")
+                
+            elif dig3reais==5 and dig2reais!=1:
+                print("cinco", end="")
+                
+            elif dig3reais==4 and dig2reais!=1:
+                print("quatro", end="")
+                
+            elif dig3reais==3 and dig2reais!=1:
+                print("três", end="")
+            
+            elif dig3reais==2 and dig2reais!=1:
+                print("dois", end="")
+                
+            elif dig3reais==1 and dig2reais!=1:
+                print("um", end="")
+                
+            if reais==1:
+                print(" real ", end="")
+                
+            elif reais!=0 and reais>-999 and reais<999:
+                print(" reais", end="")
+                
+            if reais!=0 and centavos>0:
+                print(" ", end="")
+                
+            if reais!=0 and centavos!=0:
+                print("e ", end="")
+                
+            if dig1centavos==9:
+                print("noventa", end="")
+                
+            elif dig1centavos==8:
+                print("oitenta", end="")
+                
+            elif dig1centavos==7:
+                print("setenta", end="")
+                
+            elif dig1centavos==6:
+                print("sessenta", end="")
+                
+            elif dig1centavos==5:
+                print("cinquenta", end="")
+                
+            elif dig1centavos==4:
+                print("quarenta", end="")
+                
+            elif dig1centavos==3:
+                print("trinta", end="")
+                
+            elif dig1centavos==2:
+                print("vinte", end="")
+                
+            if centavos==10:
+                print("dez", end="")
+                
+            elif centavos==11:
+                print("onze", end="")
+                
+            elif centavos==12:
+                print("doze", end="")
+                
+            elif centavos==13:
+                print("treze", end="")
+                
+            elif centavos==14:
+                print("quatorze", end="")
+                
+            elif centavos==15:
+                print("quinze", end="")
+                
+            elif centavos==16:
+                print("dezesseis", end="")
+                
+            elif centavos==17:
+                print("dezessete", end="")
+                
+            elif centavos==18:
+                print("dezoito", end="")
+                
+            elif centavos==19:
+                print("dezonove", end="")
+                
+            if dig1centavos!=0 and dig2centavos!=0:
+                print(" e ", end="")
+                
+            if dig2centavos==9:
+                print("nove", end="")
+                
+            elif dig2centavos==8:
+                print("oito", end="")
+                
+            elif dig2centavos==7:
+                print("sete", end="")
+                
+            elif dig2centavos==6:
+                print("seis", end="")
+                
+            elif dig2centavos==5:
+                print("cinco", end="")
+                
+            elif dig2centavos==4:
+                print("quatro", end="")
+            
+            elif dig2centavos==3:
+                print("três", end="")
+                
+            elif dig2centavos==2:
+                print("dois", end="")
+                
+            elif dig2centavos==1:
+                print("um", end="")
+                
+            if centavos==1:
+                print(" centavo", end="")
+                
+            elif centavos!=0:
+                print(" centavos", end="")
+                
+            #print("\n",dig1reais, dig2reais, dig3reais, dig1centavos, dig2centavos)
+            
+            again=False
+            while not again:
+            
+                again=input("\nVocê deseja realizar uma nova pesquisa?(Responda com S/N): ")
+                
+                if again=="S" or again=="s":
+                    again=True
+                    repeticaodoprograma1=False
+                elif again=="N" or again== "n":
+                    print("Obrigado por usar esse prorama :D")
+                    again=True
+                    repeticaodoprograma1=True
+                elif again != "S" or again != "N" or again != "s" or again != "n":
+                    print("\nVocê deve responder a pergunta com 'S' ou 'N', tente novamente!")
+                    repeticaodoprograma=False
+                    again=False
+                    
+    
+                
+                
+                
+            
+                
+                
+            
+            
+
+
+
+
